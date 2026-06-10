@@ -27,9 +27,9 @@
       --color-att: #2d6a4f;
       --color-late: #d97706;
       --color-abs: #b91c1c;
-      --color-untaught: #5A189A; /* Dark neon purple warning for untaught slots */
+      --color-untaught: #5A189A;
 
-      /* Subject Palette Constants */
+      /* Subject Palette Constants - Dark Mode */
       --phil-bg:    #2a1a05; --phil-fg:    #f0c07a; --phil-accent: #c07830;
       --ucsp-bg:    #062440; --ucsp-fg:    #8ec4f0; --ucsp-accent: #2a7ec0;
       --eapp-bg:    #1a1830; --eapp-fg:    #b8b4f5; --eapp-accent: #5855c0;
@@ -38,6 +38,34 @@
       --peh-bg:     #0d2205; --peh-fg:     #a8d47a; --peh-accent:  #2a6010;
       --hgp-bg:     #33103c; --hgp-fg:     #e2a4f7; --hgp-accent:  #b336d4;
       --hsa-bg:     #1a1a18; --hsa-fg:     #c8c5bc; --hsa-accent:  #444440;
+    }
+
+    /* Overhauled High-Readability Light Mode Layout */
+    :root.light-mode {
+      color-scheme: light;
+      --bg: #fdfcf9;          /* Premium warm paper base */
+      --bg2: #f5f2eb;         /* Structured container background */
+      --bg3: #eae5da;         /* Deepest layout accent color */
+      --border: #cfc8ba;      /* Highly visible grid lines */
+      --text: #161512;        /* High-contrast near-black typography */
+      --muted: #6e6759;       /* Grounded secondary text */
+      --accent: #8e682d;      /* Editorial gold accent */
+
+      /* Vibrant but professional status markers */
+      --color-att: #1e5a3c;
+      --color-late: #b45309;
+      --color-abs: #991b1b;
+      --color-untaught: #581c87;
+
+      /* Premium Light-Theme Translucent Subject Palette */
+      --phil-bg:    #fdf4e7; --phil-fg:    #7c4a03; --phil-accent: #b45309;
+      --ucsp-bg:    #f0f7fc; --ucsp-fg:    #074d82; --ucsp-accent: #2563eb;
+      --eapp-bg:    #f4f3fa; --eapp-fg:    #3b328a; --eapp-accent: #6366f1;
+      --ae-bg:      #edfbf7; --ae-fg:      #0c523a; --ae-accent:   #10b981;
+      --mil-bg:     #fdf2f5; --mil-fg:     #701a3c; --mil-accent:  #ec4899;
+      --peh-bg:     #f3faf0; --peh-fg:     #224d08; --peh-accent:  #22c55e;
+      --hgp-bg:     #faf1fc; --hgp-fg:     #58126b; --hgp-accent:  #a855f7;
+      --hsa-bg:     #f1f1ee; --hsa-fg:     #383733; --hsa-accent:  #78716c;
     }
 
     body {
@@ -51,6 +79,7 @@
     .wrap {
       max-width: 1140px;
       margin: 0 auto;
+      position: relative;
     }
 
     .header {
@@ -73,6 +102,29 @@
       margin-top: 6px;
       text-transform: uppercase;
       letter-spacing: 0.04em;
+    }
+
+    .theme-toggle-container {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+    .theme-toggle-btn {
+      background: var(--bg2);
+      border: 0.5px solid var(--border);
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .theme-toggle-btn:hover {
+      background: var(--bg3);
+      border-color: var(--muted);
     }
 
     .section-label {
@@ -171,9 +223,9 @@
       text-transform: uppercase;
       margin-left: 2px;
     }
-    .metric-val.abs-count { color: #f25c5c; }
-    .metric-val.late-count { color: #f59e0b; }
-    .metric-val.untaught-count { color: #5A189A; }
+    .metric-val.abs-count { color: var(--color-abs); }
+    .metric-val.late-count { color: var(--color-late); }
+    .metric-val.untaught-count { color: var(--color-untaught); }
 
     .table-container {
       width: 100%;
@@ -241,21 +293,21 @@
     }
 
     th.day-hidden {
-      background: #151011;
-      color: rgba(239, 68, 68, 0.4);
+      background: rgba(239, 68, 68, 0.08);
+      color: var(--color-abs);
     }
     th.day-tardy {
-      background: #151310;
-      color: rgba(217, 119, 6, 0.5);
+      background: rgba(217, 119, 6, 0.08);
+      color: var(--color-late);
     }
     
     td.day-muted-mon, td.day-muted-tue, td.day-muted-wed, td.day-muted-thu, td.day-muted-fri {
-      background: rgba(14, 14, 14, 0.75) !important;
-      opacity: 0.22;
+      background: var(--bg) !important;
+      opacity: 0.15;
       pointer-events: none;
     }
     td.day-warn-mon, td.day-warn-tue, td.day-warn-wed, td.day-warn-thu, td.day-warn-fri {
-      background: rgba(217, 119, 6, 0.03);
+      background: rgba(217, 119, 6, 0.02);
     }
 
     .time-col {
@@ -271,18 +323,20 @@
       gap: 6px;
       padding: 8px;
       border-radius: 4px;
-      border-left: 2px solid transparent;
+      border-left: 3px solid transparent;
       position: relative;
     }
     .cell-card .text-group {
       display: flex;
       flex-direction: column;
       line-height: 1.3;
+      font-weight: 500;
     }
     .cell-card .sub {
       font-size: 9.5px;
-      opacity: 0.6;
+      opacity: 0.8;
       margin-top: 1px;
+      font-weight: 400;
     }
 
     .control-row {
@@ -295,10 +349,13 @@
       flex: 1;
       display: flex;
       gap: 2px;
-      background: rgba(0,0,0,0.2);
+      background: rgba(0,0,0,0.15);
       padding: 2px;
       border-radius: 4px;
       border: 0.5px solid var(--border);
+    }
+    .light-mode .state-group {
+      background: rgba(0,0,0,0.05);
     }
     
     .state-label {
@@ -333,9 +390,8 @@
       color: #ffffff;
     }
 
-    /* unt Checkbox Button Styles */
     .untaught-label {
-      display: none; /* Hidden by default, dynamically displayed via CSS */
+      display: none;
       align-items: center;
       justify-content: center;
       font-size: 8px;
@@ -343,42 +399,41 @@
       height: 20px;
       cursor: pointer;
       border-radius: 4px;
-      background: rgba(0,0,0,0.2);
+      background: rgba(0,0,0,0.15);
       border: 0.5px solid var(--border);
       color: var(--muted);
       font-weight: 600;
       user-select: none;
+    }
+    .light-mode .untaught-label {
+      background: rgba(0,0,0,0.05);
     }
     .untaught-label input[type="checkbox"] {
       display: none;
     }
     .untaught-label:has(input:checked) {
       background: var(--color-untaught);
-      border-color: #5A189A;
+      border-color: var(--color-untaught);
       color: #ffffff;
     }
 
-    /* Show unt option ONLY when Attended or Late is checked */
     .cell-card:has(input[value="attended"]:checked) .untaught-label,
     .cell-card:has(input[value="late"]:checked) .untaught-label {
       display: inline-flex;
     }
 
-    /* Text strike-through rules */
     .cell-card:has(input[value="attended"]:checked):not(:has(input.untaught-check:checked)) .text-group {
-      opacity: 0.35;
+      opacity: 0.45;
       text-decoration: line-through;
     }
     .cell-card:has(input[value="absent"]:checked) .text-group {
-      opacity: 0.2;
+      opacity: 0.25;
       text-decoration: line-through;
     }
-    /* If marked as unt, highlight the background text card with a subtle color border */
     .cell-card:has(input.untaught-check:checked) {
-      border-right: 2px solid #5A189A;
+      border-right: 3px solid var(--color-untaught);
     }
 
-    /* Dynamic Inputs Layout Wrapper */
     .dynamic-inputs {
       display: flex;
       flex-direction: column;
@@ -387,7 +442,7 @@
 
     .reason-box, .arrival-box {
       display: none;
-      background: rgba(0,0,0,0.4);
+      background: rgba(0,0,0,0.25);
       border: 0.5px solid var(--border);
       color: var(--text);
       font-family: var(--font-mono);
@@ -397,6 +452,9 @@
       outline: none;
       width: 100%;
     }
+    .light-mode .reason-box, .light-mode .arrival-box {
+      background: var(--bg);
+    }
     .reason-box::placeholder, .arrival-box::placeholder {
       color: var(--muted);
     }
@@ -404,7 +462,6 @@
       border-color: var(--accent);
     }
 
-    /* Input visibility states */
     .cell-card:has(input[value="late"]:checked) .arrival-box {
       display: block;
     }
@@ -417,6 +474,9 @@
     .static-block {
       padding: 8px;
       font-size: 11px;
+      font-weight: bold;
+      border-radius: 4px;
+      border-left: 3px solid transparent;
     }
 
     .t-phil  { background: var(--phil-bg);  color: var(--phil-fg);  border-left-color: var(--phil-accent); }
@@ -430,7 +490,7 @@
 
     .empty-cell {
       color: var(--muted);
-      opacity: 0.2;
+      opacity: 0.4;
       text-align: center;
     }
 
@@ -466,6 +526,7 @@
     }
     .legend-name {
       color: var(--text);
+      font-weight: bold;
     }
     .legend-full {
       font-size: 10px;
@@ -501,12 +562,11 @@
     .glossary-term.g-att { color: var(--color-att); }
     .glossary-term.g-late { color: var(--color-late); }
     .glossary-term.g-abs { color: var(--color-abs); }
-    .glossary-term.g-untaught { color: #5A189A; }
+    .glossary-term.g-untaught { color: var(--color-untaught); }
     .glossary-desc {
       color: var(--muted);
     }
 
-    /* Data Safety Panel Styles */
     .data-operations-panel {
       margin-top: 1.5rem;
       border-top: 0.5px solid var(--border);
@@ -549,11 +609,13 @@
     }
     .ops-btn:hover {
       border-color: var(--muted);
-      background: #262626;
     }
     .ops-btn-export {
       border-color: rgba(201, 169, 110, 0.3);
       color: var(--accent);
+    }
+    .light-mode .ops-btn-export {
+      border-color: var(--accent);
     }
     .ops-btn-export:hover {
       background: rgba(201, 169, 110, 0.05);
@@ -563,7 +625,6 @@
       display: none;
     }
 
-    /* Absolute Totals Block Page */
     #totalsPageContainer {
       display: none;
     }
@@ -578,15 +639,15 @@
       text-align: center !important;
     }
     .stat-accent-abs {
-      color: #f25c5c;
+      color: var(--color-abs);
       font-weight: bold;
     }
     .stat-accent-late {
-      color: #f59e0b;
+      color: var(--color-late);
       font-weight: bold;
     }
     .stat-accent-untaught {
-      color: #5A189A;
+      color: var(--color-untaught);
       font-weight: bold;
     }
   </style>
@@ -594,6 +655,10 @@
 <body>
 
 <div class="wrap">
+  <div class="theme-toggle-container">
+    <button type="button" class="theme-toggle-btn" id="themeToggleBtn">☼ Light Mode</button>
+  </div>
+
   <div class="header">
     <div class="header-title">BPHSCA <em>Attendance Dashboard</em></div>
     <div class="header-sub">Batangas Province High School for Culture and Arts · G12 Kumintang · First Trimester SY 2026-2027</div>
@@ -666,11 +731,11 @@
           <tr>
             <th class="time-col">Start</th>
             <th class="time-col">End</th>
-            <th id="th-mon"><div class="day-header">Monday <div class="day-controls"><button type="button" class="day-toggle day-toggle-late" onclick="toggleWholeDay('mon', 'late')" title="Toggle student late status for this whole day">◷</button><button type="button" class="day-toggle day-toggle-abs" onclick="toggleWholeDay('mon', 'absent')" title="Toggle student absence for this whole day">⦸</button></div></div></th>
-            <th id="th-tue"><div class="day-header">Tuesday <div class="day-controls"><button type="button" class="day-toggle day-toggle-late" onclick="toggleWholeDay('tue', 'late')" title="Toggle student late status for this whole day">◷</button><button type="button" class="day-toggle day-toggle-abs" onclick="toggleWholeDay('tue', 'absent')" title="Toggle student absence for this whole day">⦸</button></div></div></th>
-            <th id="th-wed"><div class="day-header">Wednesday <div class="day-controls"><button type="button" class="day-toggle day-toggle-late" onclick="toggleWholeDay('wed', 'late')" title="Toggle student late status for this whole day">◷</button><button type="button" class="day-toggle day-toggle-abs" onclick="toggleWholeDay('wed', 'absent')" title="Toggle student absence for this whole day">⦸</button></div></div></th>
-            <th id="th-thu"><div class="day-header">Thursday <div class="day-controls"><button type="button" class="day-toggle day-toggle-late" onclick="toggleWholeDay('thu', 'late')" title="Toggle student late status for this whole day">◷</button><button type="button" class="day-toggle day-toggle-abs" onclick="toggleWholeDay('thu', 'absent')" title="Toggle student absence for this whole day">⦸</button></div></div></th>
-            <th id="th-fri"><div class="day-header">Friday <div class="day-controls"><button type="button" class="day-toggle day-toggle-late" onclick="toggleWholeDay('fri', 'late')" title="Toggle student late status for this whole day">◷</button><button type="button" class="day-toggle day-toggle-abs" onclick="toggleWholeDay('fri', 'absent')" title="Toggle student absence for this whole day">⦸</button></div></div></th>
+            <th id="th-mon"><div class="day-header">Monday <div class="day-controls"><button type="button" class="day-toggle day-toggle-late" onclick="toggleWholeDay('mon', 'late')", title="Toggle student late status for this whole day">◷</button><button type="button" class="day-toggle day-toggle-abs" onclick="toggleWholeDay('mon', 'absent')", title="Toggle student absence for this whole day">⦸</button></div></div></th>
+            <th id="th-tue"><div class="day-header">Tuesday <div class="day-controls"><button type="button" class="day-toggle day-toggle-late" onclick="toggleWholeDay('tue', 'late')", title="Toggle student late status for this whole day">◷</button><button type="button" class="day-toggle day-toggle-abs" onclick="toggleWholeDay('tue', 'absent')", title="Toggle student absence for this whole day">⦸</button></div></div></th>
+            <th id="th-wed"><div class="day-header">Wednesday <div class="day-controls"><button type="button" class="day-toggle day-toggle-late" onclick="toggleWholeDay('wed', 'late')", title="Toggle student late status for this whole day">◷</button><button type="button" class="day-toggle day-toggle-abs" onclick="toggleWholeDay('wed', 'absent')", title="Toggle student absence for this whole day">⦸</button></div></div></th>
+            <th id="th-thu"><div class="day-header">Thursday <div class="day-controls"><button type="button" class="day-toggle day-toggle-late" onclick="toggleWholeDay('thu', 'late')", title="Toggle student late status for this whole day">◷</button><button type="button" class="day-toggle day-toggle-abs" onclick="toggleWholeDay('thu', 'absent')", title="Toggle student absence for this whole day">⦸</button></div></div></th>
+            <th id="th-fri"><div class="day-header">Friday <div class="day-controls"><button type="button" class="day-toggle day-toggle-late" onclick="toggleWholeDay('fri', 'late')", title="Toggle student late status for this whole day">◷</button><button type="button" class="day-toggle day-toggle-abs" onclick="toggleWholeDay('fri', 'absent')", title="Toggle student absence for this whole day">⦸</button></div></div></th>
           </tr>
         </thead>
         <tbody>
@@ -864,7 +929,7 @@
           <tr>
             <td class="time-col">10:00</td>
             <td class="time-col">10:15</td>
-            <td colspan="5" style="text-align: center; background: #111; color: var(--muted); font-size: 10px;">MORNING BREAK</td>
+            <td colspan="5" style="text-align: center; background: rgba(0,0,0,0.06); color: var(--muted); font-size: 10px; font-weight: bold; letter-spacing: 0.05em;">MORNING BREAK</td>
           </tr>
           <tr>
             <td class="time-col">10:15</td>
@@ -958,7 +1023,7 @@
           <tr>
             <td class="time-col">11:45</td>
             <td class="time-col">12:30</td>
-            <td colspan="5" style="text-align: center; background: #111; color: var(--muted); font-size: 10px;">LUNCH BREAK</td>
+            <td colspan="5" style="text-align: center; background: rgba(0,0,0,0.06); color: var(--muted); font-size: 10px; font-weight: bold; letter-spacing: 0.05em;">LUNCH BREAK</td>
           </tr>
           <tr>
             <td class="time-col">12:30</td>
@@ -1287,6 +1352,30 @@
   let untaughtDatabase = {};
   let studentAbsenceDatabase = {}; 
 
+  const htmlEl = document.documentElement;
+  const themeToggleBtn = document.getElementById('themeToggleBtn');
+  
+  let storedTheme = localStorage.getItem('bphscaTheme') || 'dark';
+  applyTheme(storedTheme);
+
+  themeToggleBtn.onclick = function() {
+    let currentTheme = htmlEl.classList.contains('light-mode') ? 'light' : 'dark';
+    let targetTheme = currentTheme === 'light' ? 'dark' : 'light';
+    applyTheme(targetTheme);
+  };
+
+  function applyTheme(theme) {
+    if (theme === 'light') {
+      htmlEl.classList.add('light-mode');
+      themeToggleBtn.textContent = '☽ Dark Mode';
+      localStorage.setItem('bphscaTheme', 'light');
+    } else {
+      htmlEl.classList.remove('light-mode');
+      themeToggleBtn.textContent = '☼ Light Mode';
+      localStorage.setItem('bphscaTheme', 'dark');
+    }
+  }
+
   function initDatabaseSync() {
     try {
       database = JSON.parse(localStorage.getItem('bphscaCheckboxes')) || {};
@@ -1318,7 +1407,6 @@
       "Mr. Divino": { abs: 0, late: 0, untaught: 0 }
     };
 
-    // Calculate Absence and Lateness metrics
     Object.keys(database).forEach(key => {
       const match = key.match(/^W(\d+)-(.*)$/);
       if (match) {
@@ -1345,7 +1433,6 @@
       }
     });
 
-    // Calculate unt metrics separately from unt state tracking object
     Object.keys(untaughtDatabase).forEach(key => {
       const match = key.match(/^W(\d+)-(.*)$/);
       if (match && untaughtDatabase[key] === true) {
@@ -1487,7 +1574,6 @@
       matrixLabel.textContent = 'Weekly Class Program Grid — Week ' + selectedWeek;
     }
 
-    // Clear active DOM views before loading from cache
     document.querySelectorAll('.state-group').forEach(group => {
       const activeCheckedInput = group.querySelector('input:checked');
       if(activeCheckedInput) activeCheckedInput.checked = false;
@@ -1496,7 +1582,6 @@
     reasonInputs.forEach(input => input.value = '');
     arrivalInputs.forEach(input => input.value = '');
 
-    // Restore primary states from LocalStorage payload map index
     Object.keys(database).forEach(storageKey => {
       if (storageKey.startsWith('W' + selectedWeek + '-')) {
         const slotName = storageKey.replace('W' + selectedWeek + '-', '');
@@ -1509,7 +1594,6 @@
       }
     });
 
-    // Restore unt flags
     Object.keys(untaughtDatabase).forEach(storageKey => {
       if (storageKey.startsWith('W' + selectedWeek + '-')) {
         const slotName = storageKey.replace('W' + selectedWeek + '-', '');
@@ -1520,7 +1604,6 @@
       }
     });
 
-    // Restore contextual reason values
     Object.keys(reasonsDatabase).forEach(storageKey => {
       if (storageKey.startsWith('W' + selectedWeek + '-')) {
         const slotName = storageKey.replace('W' + selectedWeek + '-', '');
@@ -1531,7 +1614,6 @@
       }
     });
 
-    // Restore arrival timestamps
     Object.keys(arrivalDatabase).forEach(storageKey => {
       if (storageKey.startsWith('W' + selectedWeek + '-')) {
         const slotName = storageKey.replace('W' + selectedWeek + '-', '');
@@ -1573,7 +1655,6 @@
         this.checked = false;
         delete database[uniqueStorageKey];
         
-        // Wipe sub-states if removing core status
         delete reasonsDatabase[uniqueStorageKey];
         delete arrivalDatabase[uniqueStorageKey];
         delete untaughtDatabase[uniqueStorageKey];
@@ -1587,7 +1668,6 @@
         if (uCheck) uCheck.checked = false;
       } else {
         database[uniqueStorageKey] = this.value;
-        // If changed to absent, wipe arrival time
         if (this.value === 'absent' || this.value === 'attended') {
           delete arrivalDatabase[uniqueStorageKey];
           const aInput = document.querySelector(`input.arrival-box[data-slot="${slotName}"]`);
@@ -1651,7 +1731,6 @@
     });
   });
 
-  /* File Operation Engine Modules */
   function exportDataBackup() {
     const backupPayload = {
       version: "1.3",
@@ -1715,7 +1794,6 @@
     fileReader.readAsText(file);
   }
 
-  // Final runtime initialization sequence
   initDatabaseSync();
   runLayoutSync(activeWeek);
 </script>
