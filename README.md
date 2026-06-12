@@ -1,4 +1,4 @@
-# BPHSCA Attendance Dashboard
+# BPHSCA Teacher Attendance Dashboard
 
 A lightweight, responsive, single-file administrative workspace designed to manage, log, and track course schedule progress and multi-layered attendance metrics for **G12 Kumintang**. 
 
